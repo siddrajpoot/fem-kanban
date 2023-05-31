@@ -1,0 +1,32 @@
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+html,
+body,
+#__next {
+  height: 100%;
+  width: 100%;
+}
+
+:root {
+  --black: #000112;
+  --white: #ffffff;
+  --dark-grey: #2b2c37;
+  --med-grey: #828fa3;
+  --red: #ea5555;
+  --red-hover: #ff9898;
+  --bg-dark: #20212c;
+  --bg-light: #f4f7fd;
+  --lines-dark: #3e3f4e;
+  --lines-white: #e4ebfa;
+  --main-purple: #635fc7;
+  --main-purple-hover: #a8a4ff;
+}

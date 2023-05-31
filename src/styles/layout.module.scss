@@ -1,0 +1,18 @@
+.layout {
+  height: 100%;
+  width: 100%;
+
+  display: grid;
+
+  grid-template-columns: 300px 1fr;
+  grid-template-columns: clamp(150px, 20%, 300px) 1fr;
+  grid-template-rows: 120px 1fr;
+  grid-template-areas: 'sidebar navbar' 'sidebar main-board';
+}
+
+.mainBoard {
+  grid-area: main-board;
+
+  background-color: var(--bg-light);
+  // overflow-x: hidden;
+}
