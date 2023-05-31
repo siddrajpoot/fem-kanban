@@ -6,14 +6,22 @@ import BoardIcon from '/public/icon-board.svg'
 import LightThemeIcon from '/public/icon-light-theme.svg'
 import DarkThemeIcon from '/public/icon-dark-theme.svg'
 import HideIcon from '/public/icon-hide-sidebar.svg'
+import { useAtom, useAtomValue } from 'jotai'
+import { boardStateAtom, currentBoardIndexSelector } from '@/jotai/atoms'
+import { boardsListSelector } from '@/jotai/selectors'
+import classNames from 'classnames'
 
-import initialData from '@/data.json'
-import { type Board } from '@/pages'
-
-const boardsData: Board[] = initialData.boards
-
-// type Props = {}
 const Sidebar = () => {
+  const boardState = useAtomValue(boardStateAtom)
+  const [currentBoardIndex, setCurrentBoardIndex] = useAtom(
+    currentBoardIndexSelector
+  )
+  const [boardList] = useAtom(boardsListSelector)
+
+  const handleListClick = (index: number) => {
+    setCurrentBoardIndex(index)
+  }
+
   const renderCreateBoardButton = () => {
     return (
       <button className={styles.createButton}>
@@ -23,11 +31,17 @@ const Sidebar = () => {
     )
   }
 
-  const renderListOfBoards = (boards: Board[]) => {
-    return boards.map(board => (
-      <div key={board.name} className={styles.listItem}>
+  const renderListOfBoards = () => {
+    return boardList.map((board, index) => (
+      <div
+        key={board}
+        className={classNames(styles.listItem, {
+          [styles.active]: index === currentBoardIndex,
+        })}
+        onClick={() => handleListClick(index)}
+      >
         <BoardIcon alt='board-icon' className={styles.listIcon} />
-        <p className={styles.name}>{board.name}</p>
+        <p className={styles.name}>{board}</p>
       </div>
     ))
   }
@@ -65,8 +79,8 @@ const Sidebar = () => {
       <LogoDark alt='logo-dark' className={styles.logo} />
 
       <div className={styles.list}>
-        <p className={styles.title}>All Boards ({boardsData.length})</p>
-        {renderListOfBoards(boardsData)}
+        <p className={styles.title}>All Boards ({boardState.length})</p>
+        {renderListOfBoards()}
       </div>
 
       {renderCreateBoardButton()}

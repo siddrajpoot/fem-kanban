@@ -46,7 +46,7 @@
     margin-right: 16px;
   }
 
-  &:first-of-type {
+  &.active {
     background-color: var(--main-purple);
 
     .listIcon > path {

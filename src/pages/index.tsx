@@ -8,35 +8,21 @@
 import styles from '@/styles/index.module.scss'
 import { type NextPage } from 'next'
 import Head from 'next/head'
+import { useAtom, useSetAtom } from 'jotai'
 
-import initialData from '@/data.json'
-
-export type Board = {
-  name: string
-  columns: Column[]
-}
-
-type Column = {
-  name: string
-  tasks: Task[]
-}
-
-type Task = {
-  title: string
-  description: string
-  status: string
-  subtasks: Subtask[]
-}
-
-type Subtask = {
-  title: string
-  isCompleted: boolean
-}
+import { selectedBoardAtom } from '@/jotai/selectors'
+import { type TasksType, type ColumnsType } from '@/types'
+import { MODAL_ACTION, modalActionAtom } from '@/components/common/Modal'
 
 const Home: NextPage = () => {
-  const selectedBoard = initialData.boards[0] as Board
+  const [selectedBoard] = useAtom(selectedBoardAtom)
+  const setModalAction = useSetAtom(modalActionAtom)
 
-  const renderColumns = (columns: Column[]) => {
+  const handleTaskClick = () => {
+    setModalAction(MODAL_ACTION.VIEW_TASK)
+  }
+
+  const renderColumns = (columns?: ColumnsType) => {
     return (
       <>
         {columns?.map(column => (
@@ -53,7 +39,7 @@ const Home: NextPage = () => {
     )
   }
 
-  const renderTasks = (tasks: Task[]) => {
+  const renderTasks = (tasks: TasksType) => {
     return tasks.map(task => {
       const numberOfSubtasks = task.subtasks.length
       const numberOfCompleted = task.subtasks.reduce(
@@ -64,7 +50,7 @@ const Home: NextPage = () => {
       )
 
       return (
-        <div key={task.title} className={styles.task}>
+        <div key={task.title} className={styles.task} onClick={handleTaskClick}>
           <p className={styles.taskTitle}>{task.title}</p>
           <p className={styles.subtask}>
             {numberOfCompleted} of {numberOfSubtasks} subtasks
