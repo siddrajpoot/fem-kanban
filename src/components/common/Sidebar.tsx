@@ -7,16 +7,19 @@ import LightThemeIcon from '/public/icon-light-theme.svg'
 import DarkThemeIcon from '/public/icon-dark-theme.svg'
 import HideIcon from '/public/icon-hide-sidebar.svg'
 import { useAtom, useAtomValue } from 'jotai'
-import { boardStateAtom, currentBoardIndexSelector } from '@/jotai/atoms'
-import { boardsListSelector } from '@/jotai/selectors'
+import {
+  boardStateAtom,
+  boardsNameListSelector,
+  currentBoardIndexAtom,
+} from '@/jotai/board'
 import classNames from 'classnames'
 
 const Sidebar = () => {
   const boardState = useAtomValue(boardStateAtom)
   const [currentBoardIndex, setCurrentBoardIndex] = useAtom(
-    currentBoardIndexSelector
+    currentBoardIndexAtom
   )
-  const [boardList] = useAtom(boardsListSelector)
+  const [boardList] = useAtom(boardsNameListSelector)
 
   const handleListClick = (index: number) => {
     setCurrentBoardIndex(index)

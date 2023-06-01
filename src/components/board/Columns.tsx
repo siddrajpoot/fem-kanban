@@ -1,23 +1,11 @@
-/* eslint-disable @typescript-eslint/no-unsafe-argument */
-/* eslint-disable @typescript-eslint/no-unsafe-call */
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
-/* eslint-disable @typescript-eslint/no-explicit-any */
-/* eslint-disable @typescript-eslint/no-unsafe-return */
-
-import styles from '@/styles/index.module.scss'
-import { type NextPage } from 'next'
-import Head from 'next/head'
-import { useAtom, useSetAtom } from 'jotai'
-
 import { type TasksType, type ColumnsType, MODAL_ACTION } from '@/types'
+import styles from '@/styles/Columns.module.scss'
+import { getCompletedSubtasks } from '@/utils/helpers'
+import { useSetAtom } from 'jotai'
 import { modalActionAtom } from '@/jotai/modal'
 import { selectedTaskIndexAtom } from '@/jotai/tasks'
-import { boardSelecter } from '@/jotai/board'
-import { getCompletedSubtasks } from '@/utils/helpers'
 
-const Home: NextPage = () => {
-  const [selectedBoard] = useAtom(boardSelecter)
+const Columns = ({ columns }: { columns: ColumnsType }) => {
   const setModalAction = useSetAtom(modalActionAtom)
   const setSelectedTaskIndex = useSetAtom(selectedTaskIndexAtom)
 
@@ -65,15 +53,17 @@ const Home: NextPage = () => {
 
   return (
     <>
-      <Head>
-        <title>Kanban</title>
-      </Head>
+      {columns?.map((column, columnIndex) => (
+        <div key={column.name} className={styles.column}>
+          <p className={styles.columnTitle}>
+            {column.name} ({column.tasks.length})
+          </p>
 
-      <div className={styles.board}>
-        {renderColumns(selectedBoard?.columns)}
-      </div>
+          {renderTasks(column.tasks, columnIndex)}
+        </div>
+      ))}
+      <div className={styles.newColumn}>+ New Column</div>
     </>
   )
 }
-
-export default Home
+export default Columns

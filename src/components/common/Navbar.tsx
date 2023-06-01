@@ -1,7 +1,7 @@
 import styles from '@/styles/Navbar.module.scss'
 import EllipsisIcon from '/public/icon-vertical-ellipsis.svg'
 import { useAtomValue } from 'jotai'
-import { currentBoardNameSelector } from '@/jotai/selectors'
+import { currentBoardNameSelector } from '@/jotai/board'
 
 const Navbar = () => {
   const currentBoardName = useAtomValue(currentBoardNameSelector)

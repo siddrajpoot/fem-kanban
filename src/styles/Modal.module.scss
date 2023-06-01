@@ -24,17 +24,29 @@
   }
 }
 
-.dalogTitle {
+.dialogHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+.dialogTitle {
   font-weight: 600;
   font-size: 18px;
   color: var(--black);
 }
 
+.elipButton {
+  display: flex;
+  background: none;
+  border: none;
+  margin-left: 24px;
+  width: 10px;
+}
+
 .dialogDescription {
-  margin: 10px 0 20px;
-  color: var(--mauve11);
-  font-size: 15px;
-  line-height: 1.5;
+  margin-bottom: 24px;
 }
 
 @keyframes overlayShow {
