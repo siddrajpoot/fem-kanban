@@ -6,24 +6,13 @@ import BoardIcon from '/public/icon-board.svg'
 import LightThemeIcon from '/public/icon-light-theme.svg'
 import DarkThemeIcon from '/public/icon-dark-theme.svg'
 import HideIcon from '/public/icon-hide-sidebar.svg'
-import { useAtom, useAtomValue } from 'jotai'
-import {
-  boardStateAtom,
-  boardsNameListSelector,
-  currentBoardIndexAtom,
-} from '@/jotai/board'
 import classNames from 'classnames'
+import { useBoardStore } from '@/zustand/board'
 
 const Sidebar = () => {
-  const boardState = useAtomValue(boardStateAtom)
-  const [currentBoardIndex, setCurrentBoardIndex] = useAtom(
-    currentBoardIndexAtom
-  )
-  const [boardList] = useAtom(boardsNameListSelector)
-
-  const handleListClick = (index: number) => {
-    setCurrentBoardIndex(index)
-  }
+  const { boards, selectedBoardIndex, updateSelectedBoardIndex } =
+    useBoardStore()
+  const boardList = boards.map(board => board.name)
 
   const renderCreateBoardButton = () => {
     return (
@@ -39,9 +28,9 @@ const Sidebar = () => {
       <div
         key={board}
         className={classNames(styles.listItem, {
-          [styles.active]: index === currentBoardIndex,
+          [styles.active]: index === selectedBoardIndex,
         })}
-        onClick={() => handleListClick(index)}
+        onClick={() => updateSelectedBoardIndex(index)}
       >
         <BoardIcon alt='board-icon' className={styles.listIcon} />
         <p className={styles.name}>{board}</p>
@@ -82,7 +71,7 @@ const Sidebar = () => {
       <LogoDark alt='logo-dark' className={styles.logo} />
 
       <div className={styles.list}>
-        <p className={styles.title}>All Boards ({boardState.length})</p>
+        <p className={styles.title}>All Boards ({boards.length})</p>
         {renderListOfBoards()}
       </div>
 

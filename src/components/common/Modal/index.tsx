@@ -1,24 +1,34 @@
 import * as Dialog from '@radix-ui/react-dialog'
 import styles from '@/styles/Modal.module.scss'
 import { Plus_Jakarta_Sans } from 'next/font/google'
-import { useAtom, useSetAtom } from 'jotai'
-import ViewTask from './ViewTask'
+import ViewTaskModal from './ViewTaskModal'
 import classNames from 'classnames'
-import { hideActionAtom, shouldShowModalAtom } from '@/jotai/modal'
+import { useModalStore } from '@/zustand/modal'
+import { useBoardStore } from '@/zustand/board'
 const pjs = Plus_Jakarta_Sans({ subsets: ['latin'] })
 
 const Modal = () => {
-  const [shouldShowModal] = useAtom(shouldShowModalAtom)
-  const hideModal = useSetAtom(hideActionAtom)
+  const { modalType, setModalType } = useModalStore()
+  const shouldShowModal = Boolean(modalType)
+
+  const { updateColumnAndTaskIndex } = useBoardStore()
+
+  const handleDialogClose = () => {
+    setModalType(null)
+    updateColumnAndTaskIndex(null, null)
+  }
 
   return (
     <Dialog.Root open={shouldShowModal}>
       <Dialog.Portal>
-        <Dialog.Overlay className={styles.dialogOverlay} onClick={hideModal} />
+        <Dialog.Overlay
+          className={styles.dialogOverlay}
+          onClick={handleDialogClose}
+        />
         <Dialog.Content
           className={classNames(styles.dialogContent, pjs.className)}
         >
-          <ViewTask />
+          <ViewTaskModal />
         </Dialog.Content>
       </Dialog.Portal>
     </Dialog.Root>

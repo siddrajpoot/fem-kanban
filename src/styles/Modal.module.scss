@@ -49,6 +49,56 @@
   margin-bottom: 24px;
 }
 
+.subtaskHeader {
+  font-weight: 700;
+  font-size: 14px;
+  color: var(--med-grey);
+
+  margin-bottom: 16px;
+}
+
+.subtasks {
+  .subtask {
+    display: flex;
+    align-items: center;
+    height: 40px;
+    background: var(--bg-light);
+    border-radius: 4px;
+    margin-bottom: 8px;
+    padding: 12px;
+
+    &.isCompleted {
+      label {
+        color: var(--med-grey);
+        text-decoration-line: line-through;
+      }
+    }
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  button {
+    background: var(--white);
+    border: 1px solid rgba(130, 143, 163, 0.248914);
+    border-radius: 2px;
+
+    &[data-state="checked"] {
+      border-color: var(--main-purple);
+      background-color: var(--main-purple);
+    }
+  }
+
+  label {
+    cursor: pointer;
+    margin-left: 16px;
+    font-weight: 700;
+    font-size: 14px;
+    color: var(--black);
+  }
+}
+
 @keyframes overlayShow {
   from {
     opacity: 0;
