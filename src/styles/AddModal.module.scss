@@ -1,0 +1,54 @@
+.dialogTitle {
+  font-weight: 600;
+  font-size: 18px;
+  color: var(--black);
+  margin-bottom: 24px;
+}
+
+.formLabel {
+  font-weight: 700;
+  color: var(--med-grey);
+}
+
+.addTask {
+  .addTaskSubmitButton {
+    width: 100%;
+    border-radius: 20px;
+    background-color: var(--main-purple);
+    font-weight: 700;
+    font-size: 13px;
+  }
+}
+
+.subtasksContainer {
+  .subtask {
+    display: flex;
+    align-items: flex-end;
+
+    &:not(:last-item) {
+      margin-bottom: 12px;
+    }
+
+    button {
+      padding: 0 0 0 16px;
+
+      svg {
+        min-width: 15px;
+      }
+    }
+  }
+
+  .addSubtaskButton {
+    border-radius: 20px;
+    width: 100%;
+    background-color: #f0eff9;
+    color: var(--main-purple);
+    font-weight: 700;
+    font-size: 13px;
+    height: 40px;
+
+    &:hover {
+      background-color: #d8d7f2;
+    }
+  }
+}

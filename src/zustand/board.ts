@@ -1,6 +1,5 @@
 import initialData from "@/data.json";
 import { type TaskType, type BoardType, type SubtaskType } from "@/utils/types";
-import { produce } from "immer";
 import { create } from "zustand";
 import { immer } from "zustand/middleware/immer";
 
@@ -18,6 +17,7 @@ type Actions = {
     taskIndex: State["selectedColumnIndex"]
   ) => void;
   updateSubtask: (subtaskIndex: number, updatedSubtask: SubtaskType) => void;
+  addTask: (subtask: TaskType, columnIndex: number) => void;
 };
 
 export const useBoardStore = create(
@@ -47,6 +47,12 @@ export const useBoardStore = create(
             updatedSubtask;
         }
       }),
+    addTask: (subtask, columnIndex) =>
+      set((state) => {
+        state.boards[state.selectedBoardIndex].columns[columnIndex].tasks.push(
+          subtask
+        );
+      }),
   }))
 );
 
@@ -64,4 +70,9 @@ export const taskSelector = ({
   } else {
     return null;
   }
+};
+
+export const statusesSelector = ({ boards, selectedBoardIndex }: State) => {
+  const selectedBoard = boards[selectedBoardIndex];
+  return selectedBoard.columns.map((column) => column.name);
 };

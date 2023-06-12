@@ -7,6 +7,7 @@ import { taskSelector, useBoardStore } from "@/zustand/board";
 import { type SubtaskType } from "@/utils/types";
 import { Checkbox } from "@/components/ui/checkbox";
 import classNames from "classnames";
+import { Label } from "@/components/ui/label";
 
 const ViewTaskModal = () => {
   const selectedTask = useBoardStore(taskSelector);
@@ -37,7 +38,7 @@ const ViewTaskModal = () => {
             checked={subtask.isCompleted}
             onClick={() => handleSubtaskClick(index, subtask)}
           />
-          <label htmlFor={`${title}-${subtask.title}`}>{subtask.title}</label>
+          <Label htmlFor={`${title}-${subtask.title}`}>{subtask.title}</Label>
         </div>
       ))}
     </div>
@@ -59,9 +60,7 @@ const ViewTaskModal = () => {
       <p className={styles.subtaskHeader}>
         Subtasks ({completedSubtasks} of {subtasks.length})
       </p>
-      {renderSubtasks(selectedTask.subtasks)}
-
-      <Dialog.Close />
+      {renderSubtasks(subtasks)}
     </>
   );
 };
